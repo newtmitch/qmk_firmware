@@ -8,9 +8,21 @@
         "**/*.hex": true
     },
     "files.associations": {
+        "**/server/src/**/*.js": "javascript",
+        "**/client/src/**/*.js": "javascriptreact",
+        ".env": "properties",
         "*.h": "c",
         "*.c": "c",
         "*.cpp": "cpp",
-        "*.hpp": "cpp"
-    }
+        "*.hpp": "cpp",
+        "__split_buffer": "c",
+        "atomic": "c",
+        "ios": "c",
+        "string": "c",
+        "system_error": "c",
+        "vector": "c"
+    },
+    "editor.wordWrap": "off",
+    "editor.wordWrapColumn": 120,
+    "editor.rulers": []
 }
