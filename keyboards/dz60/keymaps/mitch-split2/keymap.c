@@ -1,9 +1,10 @@
 #include "dz60.h"
 
-#define _DFT 0
-#define _NGUI 1
-#define _FN 2
-#define _SFX 3
+#define _HHKB 0
+#define _DFT 1
+#define _NGUI 2
+#define _FN 3
+#define _SFX 4
 
 // Fillers to make layering more clear
 #define ______ KC_TRNS
@@ -50,6 +51,41 @@
 	{ K400,  K401,  KC_NO, K403,  K404,  KC_NO, K406,  KC_NO, K408,  KC_NO, K410,  K411,  KC_NO, K413,  K414 }  \
 }
 
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/* HHKB-style keys
+ * ,-----------------------------------------------------------------------------------------.
+ * | ESC |     |     |     |     |     |     |     |     |     |     |     |     |  \  |  `  |
+ * |-----------------------------------------------------------------------------------------+
+ * |        |     |     |     |     |    |     |     |     |     |     |     |     |  Bcksp  |
+ * |-----------------------------------------------------------------------------------------+
+ * |         |     |     |     |     |     |     |     |     |     |     |     |             |
+ * |-----------------------------------------------------------------------------------------+
+ * |           |     |     |     |     |     |     |     |      |    |     |           |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |      |      |       |               |       |             |       |      |       |      |
+ * `-----------------------------------------------------------------------------------------'
+ */
+/*
+ * This layer allows me to play around with an HHKB style mapping, specifically for the location
+ * of the backspace/delete key, the backslash, and the backtick/tilde. Given that this layout already
+ * basically maps over to HHKB (except for the bottom row) I can build a layer that can sit on top of
+ * default and pass almost everything through except those three keys.
+ *
+ * Also note that I'm replacing the F(0) call from the default layout on the ESC key to just a regular
+ * escape - this means the grave key moves entirely to the right side, which I believe is more true to the
+ * HHKB layout itself. However, because of where this layer is positioned, FN+ESC will still trigger the
+ * Grave key because that activates the _FN layer from the base layout. For now I'm just going to leave
+ * this be.
+ */
+ /* HHKB Layer: Base QWERTY layer in (mostly) HHKB format */
+  [_HHKB] = MITCHSPLIT2(
+      KC_ESC,  KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,  \
+      KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,  \
+      MO(_FN), KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  \
+      KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_FN), \
+      KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT), KC_RCTL   \
+      ),
+
 /*
  * This is Mitch's default ACR60 layout (also DZ60, on which the ACR60 is based). This is a
  * Mac-oriented layout, as noted by the GUI keys immediately next to the space bar area of the
@@ -78,9 +114,7 @@
  * The keymap layer definitions below look pretty bad when soft-wrapped by your IDE / text editor.
  * Be sure to disable wrapping to make things more readable with lines preserved.
  */
-
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Layer 0
+/* QWERTY "standard" layer
  * ,-----------------------------------------------------------------------------------------.
  * | Esc |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  |Bcksp| Del |
  * |-----------------------------------------------------------------------------------------+
@@ -94,6 +128,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------'
  */
 /* Qwerty gui/alt/space/alt/gui /
+ *
+ * Esc key is F(0) which outputs tilde on shift+ESC and grave accent on Fn+ESC.
  *
  * Hit MO(_FN) and Alt in that order to lock into the _FN layer.
  */
@@ -125,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * basically just blocking the GUI keys when this layer is active and not letting them flow through
  * to the default layer.
  */
- /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
+ /* NO GUI Key Layer: block the windows/command key from lower layers (useful for gaming) */
   [_NGUI] = MITCHSPLIT2(
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
@@ -142,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------------------------------------------------------------------------------------+
  * |        | Vol-| Vol+| Mute|     |     |     | Left| Down|Right|     |     |              |
  * |-----------------------------------------------------------------------------------------+
- * |           |Prev |Play |Next |     |     |     |     |     |     |     |          |      |
+ * |         |Prev |Play |Next |     |     |     |LrDft|LrNGui|LrHHKB|     |          |      |
  * |-----------------------------------------------------------------------------------------+
  * |      |      |       |               |       |               |      |      | LrSfx |     |
  * `-----------------------------------------------------------------------------------------'
@@ -152,13 +188,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * these don't enable/disable those layers (i.e. latching keys), they actually switch to that layer.
  * To go to the _NGUI layer, Fn+comma, to go to _DFT from _NGUI, hit Fn+M.
  */
- /* Layer 1: Functions, primary layer switching, media controls, directional */
+ /* Function Layer: Functions, primary layer switching, media controls, directional */
   [_FN] = MITCHSPLIT2(
-      KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL, \
-      KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP, KC_UP ,  KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
-      ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, bbbbbb,  KC_LEFT, KC_DOWN, KC_RIGHT, bbbbbb, bbbbbb, ______,   \
-      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,TO(_DFT),TO(_NGUI), bbbbbb,   bbbbbb, ______, ______,  \
-      ______,  ______,  ______,           ______, ______, ______,                    ______,   ______,TG(_SFX),______  \
+      KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,    KC_F8,    KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL, \
+      KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP,  KC_UP ,   KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
+      ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, bbbbbb,  KC_LEFT,  KC_DOWN,  KC_RIGHT, bbbbbb, bbbbbb, ______,   \
+      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,  TO(_HHKB),TO(_DFT), TG(_NGUI),bbbbbb, ______, ______,  \
+      ______,  ______,  ______,           ______, ______, ______,                      ______,   ______,TG(_SFX),______  \
       ),
 
 /* Special Effects Layer / Layer 2
@@ -193,7 +229,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *    the general mode where you want it, then cycle through variations of that mode to get
  *    something specific more quickly.
  */
- /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
+ /* "special effects" Layer: RGB lighting, backlighting, bootloader */
   [_SFX] = MITCHSPLIT2(
       ______,  RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW,RGB_M_SN,RGB_M_K, RGB_M_X, RGB_M_G,______, ______, ______,  ______, ______, ______, \
       ______,  BL_TOGG, BL_STEP, BL_DEC,  BL_INC,  ______,  ______,  ______,  ______, ______, ______, ______,  ______,  RESET,  \
