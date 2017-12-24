@@ -4,7 +4,8 @@
 #define _DFT 1
 #define _NGUI 2
 #define _FN 3
-#define _SFX 4
+#define _MS 4
+#define _SFX 5
 
 // Fillers to make layering more clear
 #define ______ KC_TRNS
@@ -82,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESC,  KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,  \
       KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,  \
       MO(_FN), KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  \
-      KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_FN), \
+      KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_MS), \
       KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT), KC_RCTL   \
       ),
 
@@ -137,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       F(0),    KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_BSPC, \
       KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,  \
       MO(_FN), KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  \
-      KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_FN), \
+      KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_MS), \
       KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT),KC_RCTL \
       ),
 
@@ -195,6 +196,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, bbbbbb,  KC_LEFT,  KC_DOWN,  KC_RIGHT, bbbbbb, bbbbbb, ______,   \
       ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,  TO(_HHKB),TO(_DFT), TG(_NGUI),bbbbbb, ______, ______,  \
       ______,  ______,  ______,           ______, ______, ______,                      ______,   ______,TG(_SFX),______  \
+      ),
+
+/* Gaming
+ * ,-----------------------------------------------------------------------------------------.
+ * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |        |     |     |  UP  |     |    |     |     |     |     |     |     |     |         |
+ * |-----------------------------------------------------------------------------------------+
+ * |         |     |LEFT | DOWN|RIGHT|     |     |     |     |     |     |     |             |
+ * |-----------------------------------------------------------------------------------------+
+ * |           |     |     |     |     |     |     |     |      |    |     |           |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |      |      |       |               |       |             |       |      |       |      |
+ * `-----------------------------------------------------------------------------------------'
+ */
+/*
+ * Pok3r-style layer switching on M and "," keys (_DFT and _NGUI layers, respectively). Note that
+ * these don't enable/disable those layers (i.e. latching keys), they actually switch to that layer.
+ * To go to the _NGUI layer, Fn+comma, to go to _DFT from _NGUI, hit Fn+M.
+ */
+ /* Function Layer: Functions, primary layer switching, media controls, directional */
+  [_MS] = MITCHSPLIT2(
+      bbbbbb,  KC_ACL0, KC_ACL1,  KC_ACL2, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
+      bbbbbb,  KC_WH_U, KC_BTN2,  KC_MS_U, KC_BTN1, KC_WH_D, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
+      bbbbbb,  bbbbbb, KC_MS_L,  KC_MS_D, KC_MS_R, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
+      bbbbbb,  bbbbbb, bbbbbb,  bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
+      bbbbbb,  bbbbbb, bbbbbb,          bbbbbb, bbbbbb, bbbbbb,                 bbbbbb, bbbbbb, bbbbbb, bbbbbb   \
       ),
 
 /* Special Effects Layer / Layer 2
