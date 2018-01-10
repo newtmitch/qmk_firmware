@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------------------------------------------------------------------------------------+
  * | Shift     |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  / | RShift     | FN  |
  * |-----------------------------------------------------------------------------------------+
- * | LCtrl | LAlt | LGUI  |      Space      | Space|   Space    | RGUI |  Fn  | RAlt | RCtrl |
+ * | LCtrl | LAlt | LGUI  |                  Space              | RGUI |  Fn  | RAlt | RCtrl |
  * `-----------------------------------------------------------------------------------------'
  */
 /* Qwerty gui/alt/space/alt/gui /
