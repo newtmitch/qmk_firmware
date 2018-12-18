@@ -1,11 +1,13 @@
 #include "dz60.h"
 
-#define _HHKB 0
-#define _DFT 1
+#define _HHKB 1
+#define _DFT 0
 #define _NGUI 2
-#define _FN 3
-#define _MS 4
-#define _SFX 5
+#define _VIM 3
+#define _FN 4
+#define _VIMFN 5
+#define _MS 6
+#define _SFX 7
 
 // Fillers to make layering more clear
 #define ______ KC_TRNS
@@ -21,7 +23,7 @@
  * specific keymap definitions. I'm assuming that's not a bad idea...
  */
 
-/* Mitch's keymap, "MitchSplit2":
+/* Mitch's keymap, "MITCHSPLIT2":
  *  Standard 60% base, split right shift, 3-split space, split backspace, standard modifier row.
  *  Split shift is 2.75u + 1.25u + 2.25u (total of 6.25u). Might not work with other orientations.
  */
@@ -171,6 +173,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ______,  ______, bbbbbb,          ______, ______, ______,                 bbbbbb, ______, ______, ______   \
       ),
 
+/* Simple VIM Momentary switch layer
+ * ,-----------------------------------------------------------------------------------------.
+ * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
+ * |-----------------------------------------------------------------------------------------+
+ * |         |     |     |     |     |     |     |     |     |     |     |     |             |
+ * |-----------------------------------------------------------------------------------------+
+ * |           |     |     |     |     |     |     |     |      |    |     |           |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |      |      |       |               |       |             |       |      |       |      |
+ * `-----------------------------------------------------------------------------------------'
+ */
+/* Add a layer that allows a momentary switch into the VIM-style arrows instead of the standard
+ * arrow cluster shape.
+ */
+ /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
+  [_VIM] = MITCHSPLIT2(
+      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, \
+      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
+      MO(_VIMFN),  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
+      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, MO(_VIMFN),  \
+      ______,  ______, ______,          ______, ______, ______,                 ______, MO(_VIMFN), ______, ______   \
+      ),
+
 /* Fn Layer / Layer 1
  * ,-----------------------------------------------------------------------------------------.
  * |KC_GRV| F1  | F2  | F3  | F4  | F5  | F6  | F7  | F8  | F9  | F10 | F11 | F12 |   Del    |
@@ -194,8 +221,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,    KC_F8,    KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL, \
       KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, KC_INS, KC_HOME, KC_PGUP,  KC_UP ,   KC_PGDOWN,KC_END, bbbbbb, bbbbbb, KC_DEL,  \
       ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, bbbbbb,  KC_LEFT,  KC_DOWN,  KC_RIGHT, bbbbbb, bbbbbb, ______,   \
-      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,  TO(_HHKB),TO(_DFT), TG(_NGUI),bbbbbb, ______, ______,  \
+      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,  TO(_DFT),TO(_HHKB), TG(_NGUI),TG(_VIM), ______, ______,  \
       ______,  ______,  ______,           ______, ______, ______,                      ______,   ______,TG(_SFX),______  \
+      ),
+
+/* VIM-arrows on the function layer
+ * ,-----------------------------------------------------------------------------------------.
+ * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
+ * |-----------------------------------------------------------------------------------------+
+ * |         |     |     |     |     |     | Left | Down | Up |Right|     |     |            |
+ * |-----------------------------------------------------------------------------------------+
+ * |           |     |     |     |     |     |     |     |      |    |     |           |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |      |      |       |               |       |               |      |      |       |     |
+ * `-----------------------------------------------------------------------------------------'
+ */
+  [_VIMFN] = MITCHSPLIT2( /* overrides other arrows on the Fn layer */
+      KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL,\
+      KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP, bbbbbb ,  KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
+      ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, bbbbbb, bbbbbb, ______,   \
+      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,TO(_DFT),TO(_VIM), TO(_NGUI),   bbbbbb, ______, ______,  \
+      ______,  ______,  ______,           ______, ______, ______,                    ______,   ______,TG(_SFX),______  \
       ),
 
 /* Gaming
