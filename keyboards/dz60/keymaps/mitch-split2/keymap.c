@@ -1,13 +1,14 @@
 #include "dz60.h"
 
-#define _HHKB 1
 #define _DFT 0
+#define _HHKB 1
 #define _NGUI 2
 #define _VIM 3
 #define _FN 4
 #define _VIMFN 5
 #define _MS 6
 #define _SFX 7
+#define _NOWINKEY 8
 
 // Fillers to make layering more clear
 #define ______ KC_TRNS
@@ -81,6 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * this be.
  */
  /* HHKB Layer: Base QWERTY layer in (mostly) HHKB format */
+    /* rsm: 2020-06-08 - not used
   [_HHKB] = MITCHSPLIT2(
       KC_ESC,  KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,  \
       KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,  \
@@ -88,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_MS), \
       KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT), KC_RCTL   \
       ),
-
+    */
 /*
  * This is Mitch's default ACR60 layout (also DZ60, on which the ACR60 is based). This is a
  * Mac-oriented layout, as noted by the GUI keys immediately next to the space bar area of the
@@ -144,6 +146,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT),KC_RCTL \
       ),
 
+/* Kill windows Key
+ * ,-----------------------------------------------------------------------------------------.
+ * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
+ * |-----------------------------------------------------------------------------------------+
+ * |         |     |     |     |     |     |     |     |     |     |     |     |             |
+ * |-----------------------------------------------------------------------------------------+
+ * |           |     |     |     |     |     |     |     |      |    |     |           |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |      |      |BLOCKED|               |       |             |BLOCKED|      |       |      |
+ * `-----------------------------------------------------------------------------------------'
+ */
+/* Replace the windows key with another control key. easier copy/paste and other stuff in windows when needed */
+  [_NOWINKEY] = MITCHSPLIT2(
+      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
+      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
+      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
+      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
+      ______,  ______, KC_LCTL,          ______, ______, ______,                 KC_LCTL, ______, ______, ______   \
+      ),
+
+
 /* Gaming
  * ,-----------------------------------------------------------------------------------------.
  * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
@@ -165,6 +190,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * to the default layer.
  */
  /* NO GUI Key Layer: block the windows/command key from lower layers (useful for gaming) */
+    /* rsm: disabled 2020-06-08 - replaced with the windows-layer below that removes the GUI keys entirely and adds ctrl
   [_NGUI] = MITCHSPLIT2(
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
@@ -172,6 +198,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
       ______,  ______, bbbbbb,          ______, ______, ______,                 bbbbbb, ______, ______, ______   \
       ),
+      */
 
 /* Simple VIM Momentary switch layer
  * ,-----------------------------------------------------------------------------------------.
@@ -190,6 +217,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * arrow cluster shape.
  */
  /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
+    /* rsm: disabled 2020-06-08
   [_VIM] = MITCHSPLIT2(
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, \
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
@@ -197,6 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, MO(_VIMFN),  \
       ______,  ______, ______,          ______, ______, ______,                 ______, MO(_VIMFN), ______, ______   \
       ),
+      */
 
 /* Fn Layer / Layer 1
  * ,-----------------------------------------------------------------------------------------.
@@ -221,8 +250,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,    KC_F8,    KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL, \
       KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, KC_INS, KC_HOME, KC_PGUP,  KC_UP ,   KC_PGDOWN,KC_END, bbbbbb, bbbbbb, KC_DEL,  \
       ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, bbbbbb,  KC_LEFT,  KC_DOWN,  KC_RIGHT, bbbbbb, bbbbbb, ______,   \
-      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,  TO(_DFT),TO(_HHKB), TG(_NGUI),TG(_VIM), ______, ______,  \
-      ______,  ______,  ______,           ______, ______, ______,                      ______,   ______,TG(_SFX),______  \
+      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,  TO(_DFT),TO(_NOWINKEY), ______, ______, ______, ______,  \
+      ______,  ______,  ______,           ______, ______, ______,                          ______, ______,TG(_SFX),______  \
       ),
 
 /* VIM-arrows on the function layer
@@ -238,13 +267,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |       |               |       |               |      |      |       |     |
  * `-----------------------------------------------------------------------------------------'
  */
-  [_VIMFN] = MITCHSPLIT2( /* overrides other arrows on the Fn layer */
+    // overrides other arrows on the Fn layer
+    /* rsm: disabled 2020-06-08 - I don't really use these
+  [_VIMFN] = MITCHSPLIT2(
       KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL,\
       KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP, bbbbbb ,  KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
       ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, bbbbbb, bbbbbb, ______,   \
       ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,TO(_DFT),TO(_VIM), TO(_NGUI),   bbbbbb, ______, ______,  \
       ______,  ______,  ______,           ______, ______, ______,                    ______,   ______,TG(_SFX),______  \
       ),
+*/
 
 /* Gaming
  * ,-----------------------------------------------------------------------------------------.
@@ -259,12 +291,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |       |               |       |             |       |      |       |      |
  * `-----------------------------------------------------------------------------------------'
  */
-/*
- * Pok3r-style layer switching on M and "," keys (_DFT and _NGUI layers, respectively). Note that
- * these don't enable/disable those layers (i.e. latching keys), they actually switch to that layer.
- * To go to the _NGUI layer, Fn+comma, to go to _DFT from _NGUI, hit Fn+M.
- */
  /* Function Layer: Functions, primary layer switching, media controls, directional */
+    /* rsm: disabled 2020-06-08 - I don't really use this
   [_MS] = MITCHSPLIT2(
       bbbbbb,  KC_ACL0, KC_ACL1,  KC_ACL2, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
       bbbbbb,  KC_WH_U, KC_BTN2,  KC_MS_U, KC_BTN1, KC_WH_D, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
@@ -272,6 +300,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       bbbbbb,  bbbbbb, bbbbbb,  bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
       bbbbbb,  bbbbbb, bbbbbb,          bbbbbb, bbbbbb, bbbbbb,                 bbbbbb, bbbbbb, bbbbbb, bbbbbb   \
       ),
+      */
 
 /* Special Effects Layer / Layer 2
  * ,-----------------------------------------------------------------------------------------.
