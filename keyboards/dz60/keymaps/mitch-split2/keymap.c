@@ -56,41 +56,7 @@
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* HHKB-style keys
- * ,-----------------------------------------------------------------------------------------.
- * | ESC |     |     |     |     |     |     |     |     |     |     |     |     |  \  |  `  |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |     |     |    |     |     |     |     |     |     |     |  Bcksp  |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |     |     |     |     |     |     |     |     |     |     |             |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |       |               |       |             |       |      |       |      |
- * `-----------------------------------------------------------------------------------------'
- */
-/*
- * This layer allows me to play around with an HHKB style mapping, specifically for the location
- * of the backspace/delete key, the backslash, and the backtick/tilde. Given that this layout already
- * basically maps over to HHKB (except for the bottom row) I can build a layer that can sit on top of
- * default and pass almost everything through except those three keys.
- *
- * Also note that I'm replacing the F(0) call from the default layout on the ESC key to just a regular
- * escape - this means the grave key moves entirely to the right side, which I believe is more true to the
- * HHKB layout itself. However, because of where this layer is positioned, FN+ESC will still trigger the
- * Grave key because that activates the _FN layer from the base layout. For now I'm just going to leave
- * this be.
- */
- /* HHKB Layer: Base QWERTY layer in (mostly) HHKB format */
-    /* rsm: 2020-06-08 - not used
-  [_HHKB] = MITCHSPLIT2(
-      KC_ESC,  KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,  \
-      KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,  \
-      MO(_FN), KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  \
-      KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_MS), \
-      KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT), KC_RCTL   \
-      ),
-    */
+
 /*
  * This is Mitch's default ACR60 layout (also DZ60, on which the ACR60 is based). This is a
  * Mac-oriented layout, as noted by the GUI keys immediately next to the space bar area of the
@@ -168,65 +134,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ______,  ______, KC_LCTL,          ______, ______, ______,                 KC_LCTL, ______, ______, ______   \
       ),
 
-
-/* Gaming
- * ,-----------------------------------------------------------------------------------------.
- * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |     |     |     |     |     |     |     |     |     |     |             |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |BLOCKED|               |       |             |BLOCKED|      |       |      |
- * `-----------------------------------------------------------------------------------------'
- */
-/* I disable the GUI / System key for gaming, as usually that's windows and I hit that at the most
- * inopportune moments. And games don't use the windows key. I'd use the Bootmagic MAGIC_NO_GUI and
- * MAGIC_UNNO_GUI keycodes, but that actually disables it and has it persist beyond disconnection
- * of the board. That's less convenient (and more confusing) for me than this approach, which is
- * basically just blocking the GUI keys when this layer is active and not letting them flow through
- * to the default layer.
- */
- /* NO GUI Key Layer: block the windows/command key from lower layers (useful for gaming) */
-    /* rsm: disabled 2020-06-08 - replaced with the windows-layer below that removes the GUI keys entirely and adds ctrl
-  [_NGUI] = MITCHSPLIT2(
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, bbbbbb,          ______, ______, ______,                 bbbbbb, ______, ______, ______   \
-      ),
-      */
-
-/* Simple VIM Momentary switch layer
- * ,-----------------------------------------------------------------------------------------.
- * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |     |     |     |     |     |     |     |     |     |     |             |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |       |               |       |             |       |      |       |      |
- * `-----------------------------------------------------------------------------------------'
- */
-/* Add a layer that allows a momentary switch into the VIM-style arrows instead of the standard
- * arrow cluster shape.
- */
- /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
-    /* rsm: disabled 2020-06-08
-  [_VIM] = MITCHSPLIT2(
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      MO(_VIMFN),  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, MO(_VIMFN),  \
-      ______,  ______, ______,          ______, ______, ______,                 ______, MO(_VIMFN), ______, ______   \
-      ),
-      */
-
 /* Fn Layer / Layer 1
  * ,-----------------------------------------------------------------------------------------.
  * |KC_GRV| F1  | F2  | F3  | F4  | F5  | F6  | F7  | F8  | F9  | F10 | F11 | F12 |   Del    |
@@ -253,54 +160,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,  TO(_DFT),TO(_NOWINKEY), ______, ______, ______, ______,  \
       ______,  ______,  ______,           ______, ______, ______,                          ______, ______,TG(_SFX),______  \
       ),
-
-/* VIM-arrows on the function layer
- * ,-----------------------------------------------------------------------------------------.
- * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |     |     |     |     | Left | Down | Up |Right|     |     |            |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |       |               |       |               |      |      |       |     |
- * `-----------------------------------------------------------------------------------------'
- */
-    // overrides other arrows on the Fn layer
-    /* rsm: disabled 2020-06-08 - I don't really use these
-  [_VIMFN] = MITCHSPLIT2(
-      KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL,\
-      KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP, bbbbbb ,  KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
-      ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, bbbbbb, bbbbbb, ______,   \
-      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,TO(_DFT),TO(_VIM), TO(_NGUI),   bbbbbb, ______, ______,  \
-      ______,  ______,  ______,           ______, ______, ______,                    ______,   ______,TG(_SFX),______  \
-      ),
-*/
-
-/* Gaming
- * ,-----------------------------------------------------------------------------------------.
- * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |  UP  |     |    |     |     |     |     |     |     |     |         |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |LEFT | DOWN|RIGHT|     |     |     |     |     |     |     |             |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |       |               |       |             |       |      |       |      |
- * `-----------------------------------------------------------------------------------------'
- */
- /* Function Layer: Functions, primary layer switching, media controls, directional */
-    /* rsm: disabled 2020-06-08 - I don't really use this
-  [_MS] = MITCHSPLIT2(
-      bbbbbb,  KC_ACL0, KC_ACL1,  KC_ACL2, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
-      bbbbbb,  KC_WH_U, KC_BTN2,  KC_MS_U, KC_BTN1, KC_WH_D, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
-      bbbbbb,  bbbbbb, KC_MS_L,  KC_MS_D, KC_MS_R, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
-      bbbbbb,  bbbbbb, bbbbbb,  bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb, bbbbbb,  \
-      bbbbbb,  bbbbbb, bbbbbb,          bbbbbb, bbbbbb, bbbbbb,                 bbbbbb, bbbbbb, bbbbbb, bbbbbb   \
-      ),
-      */
 
 /* Special Effects Layer / Layer 2
  * ,-----------------------------------------------------------------------------------------.
@@ -345,36 +204,73 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-enum function_id {
-    SHIFT_ESC,
-};
+/*
+ * BACKUP LAYOUT CONFIGS
+ * I'm not using these right now but wanted to keep them just in case.
+ */
 
-const uint16_t PROGMEM fn_actions[] = {
-  [0]  = ACTION_FUNCTION(SHIFT_ESC),
-};
+/* HHKB-style keys
+ * ,-----------------------------------------------------------------------------------------.
+ * | ESC |     |     |     |     |     |     |     |     |     |     |     |     |  \  |  `  |
+ * |-----------------------------------------------------------------------------------------+
+ * |        |     |     |     |     |    |     |     |     |     |     |     |     |  Bcksp  |
+ * |-----------------------------------------------------------------------------------------+
+ * |         |     |     |     |     |     |     |     |     |     |     |     |             |
+ * |-----------------------------------------------------------------------------------------+
+ * |           |     |     |     |     |     |     |     |      |    |     |           |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |      |      |       |               |       |             |       |      |       |      |
+ * `-----------------------------------------------------------------------------------------'
+ */
+/*
+ * NOTE 2021-04-24: This looks like it isn't set up very well. This is likely best implemented as
+ * a layer on top of the base layer to override the backslash and split backspace keys. But I'm
+ * leaving this as-is for now.
+ *
+ * ---- ORIGINAL COMMENTS BELOW ----
+ *
+ * This layer allows me to play around with an HHKB style mapping, specifically for the location
+ * of the backspace/delete key, the backslash, and the backtick/tilde. Given that this layout already
+ * basically maps over to HHKB (except for the bottom row) I can build a layer that can sit on top of
+ * default and pass almost everything through except those three keys.
+ *
+ * Also note that I'm replacing the F(0) call from the default layout on the ESC key to just a regular
+ * escape - this means the grave key moves entirely to the right side, which I believe is more true to the
+ * HHKB layout itself. However, because of where this layer is positioned, FN+ESC will still trigger the
+ * Grave key because that activates the _FN layer from the base layout. For now I'm just going to leave
+ * this be.
+ */
+/* HHKB Layer: Base QWERTY layer in (mostly) HHKB format */
+/* rsm: 2020-06-08 - not used
+[_HHKB] = MITCHSPLIT2(
+  KC_ESC,  KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,  \
+  KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,  \
+  MO(_FN), KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  \
+  KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_MS), \
+  KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT), KC_RCTL   \
+  ),
+*/
 
-void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
-  static uint8_t shift_esc_shift_mask;
-  switch (id) {
-    case SHIFT_ESC:
-      shift_esc_shift_mask = get_mods()&MODS_CTRL_MASK;
-      if (record->event.pressed) {
-        if (shift_esc_shift_mask) {
-          add_key(KC_GRV);
-          send_keyboard_report();
-        } else {
-          add_key(KC_ESC);
-          send_keyboard_report();
-        }
-      } else {
-        if (shift_esc_shift_mask) {
-          del_key(KC_GRV);
-          send_keyboard_report();
-        } else {
-          del_key(KC_ESC);
-          send_keyboard_report();
-        }
-      }
-      break;
-  }
-}
+/* VIM-arrows on the function layer
+ * ,-----------------------------------------------------------------------------------------.
+ * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
+ * |-----------------------------------------------------------------------------------------+
+ * |         |     |     |     |     |     | Left | Down | Up |Right|     |     |            |
+ * |-----------------------------------------------------------------------------------------+
+ * |           |     |     |     |     |     |     |     |      |    |     |           |     |
+ * |-----------------------------------------------------------------------------------------+
+ * |      |      |       |               |       |               |      |      |       |     |
+ * `-----------------------------------------------------------------------------------------'
+ */
+// overrides other arrows on the Fn layer
+/* rsm: disabled 2020-06-08 - I don't really use these
+[_VIMFN] = MITCHSPLIT2(
+  KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, KC_DEL,\
+  KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP, bbbbbb ,  KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
+  ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, bbbbbb, bbbbbb, ______,   \
+  ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,TO(_DFT),TO(_VIM), TO(_NGUI),   bbbbbb, ______, ______,  \
+  ______,  ______,  ______,           ______, ______, ______,                    ______,   ______,TG(_SFX),______  \
+  ),
+*/
