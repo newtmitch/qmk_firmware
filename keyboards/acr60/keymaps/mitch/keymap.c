@@ -1,11 +1,8 @@
 #include QMK_KEYBOARD_H
 
 #define _DFT 0
-#define _NGUI 1
-#define _VIM 2
-#define _FN 3
-#define _VIMFN 4
-#define _SFX 5
+#define _FN 1
+#define _SFX 2
 
 // Fillers to make layering more clear
 #define ______ KC_TRNS
@@ -20,7 +17,7 @@
 /*
  * This is Mitch's default ACR60 layout (also DZ60, on which the ACR60 is based). This is a
  * Mac-oriented layout, as noted by the GUI keys immediately next to the space bar area of the
- * lower modifier row. This uses the LAYOUT_mitchsplit keymap as defined in arc60.h, which
+ * lower modifier row. This uses the LAYOUT keymap as defined in arc60.h, which
  * uses a 3-split space bar and a split right shift. Otherwise it's a standard 60% layout (for
  * now).
  *
@@ -44,7 +41,7 @@
  *      access is on this layer. If layer locked, hit right Alt key to get back to layer 0.
  *
  * The keymap layer definitions below look pretty bad when soft-wrapped by your IDE / text editor.
- * Be sure to disable wrapping to make things more readable with lines preserved.
+* Be sure to disable wrapping to make things more readable with lines preserved.
  */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -65,67 +62,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  * Hit MO(_FN) and Alt in that order to lock into the _FN layer.
  */
-  [_DFT] = LAYOUT_mitchsplit( /* Basic QWERTY */
-      F(0),    KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, \
-      KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,  \
-      MO(_FN), KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  \
-      KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, MO(_FN), \
-      KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), LT(_SFX, KC_RALT),KC_RCTL \
-      ),
-
-/* Gaming
- * ,-----------------------------------------------------------------------------------------.
- * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |     |     |     |     |     |     |     |     |     |     |             |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |BLOCKED|               |       |             |BLOCKED|      |       |      |
- * `-----------------------------------------------------------------------------------------'
- */
-/* I disable the GUI / System key for gaming, as usually that's windows and I hit that at the most
- * inopportune moments. And games don't use the windows key. I'd use the Bootmagic MAGIC_NO_GUI and
- * MAGIC_UNNO_GUI keycodes, but that actually disables it and has it persist beyond disconnection
- * of the board. That's less convenient (and more confusing) for me than this approach, which is
- * basically just blocking the GUI keys when this layer is active and not letting them flow through
- * to the default layer.
- */
- /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
-  [_NGUI] = LAYOUT_mitchsplit(
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, bbbbbb,          ______, ______, ______,                 bbbbbb, ______, ______, ______   \
-      ),
-
-/* Simple VIM Momentary switch layer
- * ,-----------------------------------------------------------------------------------------.
- * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |     |     |     |     |     |     |     |     |     |     |             |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |       |               |       |             |       |      |       |      |
- * `-----------------------------------------------------------------------------------------'
- */
-/* Add a layer that allows a momentary switch into the VIM-style arrows instead of the standard
- * arrow cluster shape.
- */
- /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
-  [_VIM] = MITCHSPLIT(
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      MO(_VIMFN),  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, ______,  \
-      ______,  ______, ______,  ______, ______, ______, ______, ______, ______, ______, ______, ______, MO(_VIMFN),  \
-      ______,  ______, ______,          ______, ______, ______,                 ______, MO(_VIMFN), ______, ______   \
-      ),
+[_DFT] = LAYOUT( /* Basic QWERTY */
+    F(0),    KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS,  KC_EQL,  ______, KC_BSPC,
+    KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC,  KC_RBRC, KC_BSLS,
+    MO(_FN), KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,  KC_ENT,
+    KC_LSFT, ______,  KC_Z,    KC_X,  KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT, MO(_FN),
+    KC_LCTL, KC_LALT, KC_LGUI,        KC_SPC, KC_SPC, KC_SPC,                  KC_RGUI, MO(_FN), ______,   LT(_SFX, KC_RALT), KC_RCTL
+    ),
 
 /* Fn Layer / Layer 1
  * ,-----------------------------------------------------------------------------------------.
@@ -146,35 +89,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * To go to the _NGUI layer, Fn+comma, to go to _DFT from _NGUI, hit Fn+M.
  */
  /* Layer 1: Functions, primary layer switching, media controls, directional */
-  [_FN] = LAYOUT_mitchsplit(
-      KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, \
-      KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP, KC_UP ,  KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
-      ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, bbbbbb,  KC_LEFT, KC_DOWN, KC_RIGHT, bbbbbb, bbbbbb, ______,   \
-      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,TO(_DFT),TO(_VIM), bbbbbb,   bbbbbb, ______, ______,  \
-      ______,  ______,  ______,           ______, ______, ______,                    ______,   ______,TG(_SFX),______  \
-      ),
-
-/* VIM-arrows on the function layer
- * ,-----------------------------------------------------------------------------------------.
- * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
- * |-----------------------------------------------------------------------------------------+
- * |        |     |     |     |     |    |     |     |     |     |     |     |     |         |
- * |-----------------------------------------------------------------------------------------+
- * |         |     |     |     |     |     | Left | Down | Up |Right|     |     |            |
- * |-----------------------------------------------------------------------------------------+
- * |           |     |     |     |     |     |     |     |      |    |     |           |     |
- * |-----------------------------------------------------------------------------------------+
- * |      |      |       |               |       |               |      |      |       |     |
- * `-----------------------------------------------------------------------------------------'
- */
-  [_VIMFN] = MITCHSPLIT( /* overrides other arrows on the Fn layer */
-      KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10, KC_F11, KC_F12, KC_DEL, \
-      KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, bbbbbb, KC_HOME, KC_PGUP, bbbbbb ,  KC_PGDOWN,KC_END, bbbbbb, bbbbbb, bbbbbb,  \
-      ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb, bbbbbb, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, bbbbbb, bbbbbb, ______,   \
-      ______,  KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb, bbbbbb,TO(_DFT),TO(_VIM), TO(_NGUI),   bbbbbb, ______, ______,  \
-      ______,  ______,  ______,           ______, ______, ______,                    ______,   ______,TG(_SFX),______  \
-      ),
-
+[_FN] = LAYOUT(
+    KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,  KC_F6,   KC_F7,    KC_F8,    KC_F9,     KC_F10, KC_F11,   KC_F12, ______, KC_DEL,
+    KC_CAPS, bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb,  bbbbbb, KC_HOME, KC_PGUP,  KC_UP ,   KC_PGDOWN, KC_END, bbbbbb,   bbbbbb, bbbbbb,
+    ______,  KC_VOLD, KC_VOLU, KC_MUTE, bbbbbb,  bbbbbb, bbbbbb,  KC_LEFT,  KC_DOWN,  KC_RIGHT,  bbbbbb, bbbbbb,   ______,
+    ______,  _______, KC_MPRV, KC_MPLY, KC_MNXT, bbbbbb, bbbbbb,  bbbbbb,   TO(_DFT), bbbbbb,    bbbbbb, bbbbbb,   ______, ______,
+    ______,  ______,  ______,           ______,  ______, ______,                      ______,    ______, TG(_SFX), ______, ______
+    ),
 
 /* Special Effects Layer / Layer 2
  * ,-----------------------------------------------------------------------------------------.
@@ -209,13 +130,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *    something specific more quickly.
  */
  /* Layer 2: "special effects": RGB lighting, backlighting, bootloader */
-  [_SFX] = LAYOUT_mitchsplit(
-      ______,  RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW,RGB_M_SN,RGB_M_K, RGB_M_X, RGB_M_G,______, ______, ______,  ______, ______,  \
-      ______,  BL_TOGG, BL_STEP, BL_DEC,  BL_INC,  ______,  ______,  ______,  ______, ______, ______, ______,  ______,  RESET,  \
-      ______,  RGB_TOG, RGB_MOD,______,  ______,  ______,  ______,  ______,  ______, ______, ______, ______,  ______,  \
-      ______,  RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, ______,  ______, ______, ______, ______,  ______,  \
-      ______,  ______,  ______,             ______, ______, ______,                   ______, ______,TO(_DFT),______   \
-      )
+[_SFX] = LAYOUT(
+    ______, RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW, RGB_M_SN, RGB_M_K, RGB_M_X, RGB_M_G, ______, ______, ______,   ______, ______, ______,
+    ______, BL_TOGG, BL_STEP, BL_DEC,  BL_INC,   ______,   ______,  ______,  ______,  ______, ______, ______,   ______, RESET,
+    ______, RGB_TOG, RGB_MOD, ______,  ______,   ______,   ______,  ______,  ______,  ______, ______, ______,   ______,
+    ______, _______, RGB_HUI, RGB_HUD, RGB_SAI,  RGB_SAD,  RGB_VAI, RGB_VAD, ______,  ______, ______, ______,   ______, ______,
+    ______, ______,  ______,           ______,   ______,   ______,                    ______, ______, TO(_DFT), ______, ______
+    )
 
 };
 
